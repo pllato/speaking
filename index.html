@@ -1,0 +1,193 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Английский в Roblox</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: #fff;
+        }
+        .roblox-btn {
+            background-color: #00b7ff;
+            transition: background-color 0.3s;
+        }
+        .roblox-btn:hover {
+            background-color: #0099cc;
+        }
+        .section-bg {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <!-- Шапка -->
+    <header class="bg-[#1b2a49] py-4 shadow-lg">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <h1 class="text-3xl font-bold text-white">Английский в Roblox</h1>
+            <nav>
+                <a href="#about" class="text-white mx-4 hover:text-[#00b7ff]">О нас</a>
+                <a href="#subscription" class="text-white mx-4 hover:text-[#00b7ff]">Подписка</a>
+                <a href="#form" class="text-white mx-4 hover:text-[#00b7ff]">Заявка</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Главная секция -->
+    <section class="flex-grow flex items-center justify-center py-12">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-4xl md:text-5xl font-bold mb-6">Учи английский, играя в Roblox!</h2>
+            <p class="text-xl mb-8 max-w-2xl mx-auto">
+                Веселые и увлекательные уроки английского внутри Roblox для детей и подростков!
+            </p>
+            <a href="#form" class="roblox-btn text-white font-bold py-3 px-6 rounded-lg text-lg">
+                Начать
+            </a>
+        </div>
+    </section>
+
+    <!-- Секция "О нас" -->
+    <section id="about" class="py-16 section-bg">
+        <div class="container mx-auto px-4">
+            <h3 class="text-3xl font-bold text-center mb-12">Почему мы?</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white text-[#1b2a49] p-6 rounded-lg shadow-lg">
+                    <h4 class="text-2xl font-bold mb-4">Для родителей</h4>
+                    <p class="text-lg">
+                        В нашей онлайн-школе ваш ребенок остается увлеченным процессом. На каждом уроке он проходит разговорные квесты и повышает свои навыки. С первого же урока вы увидите результаты — ваш ребенок будет говорить, говорить и еще раз говорить! Каждое занятие — это увлекательное приключение для вашего малыша.
+                    </p>
+                </div>
+                <div class="bg-white text-[#1b2a49] p-6 rounded-lg shadow-lg">
+                    <h4 class="text-2xl font-bold mb-4">Для игроков</h4>
+                    <p class="text-lg">
+                        Выполняя квесты, ты будешь получать баллы, которые копятся. Каждый день — новый квест! Не забывай проходить их ежедневно. Баллы накапливаются, и раз в неделю тебя ждет главный квест. Все накопленные баллы за неделю ты сможешь обменять на реальные Robux. Хочешь начать зарабатывать настоящие Robux? Попроси родителей записать тебя в нашу школу!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Секция "Подписка" -->
+    <section id="subscription" class="py-16">
+        <div class="container mx-auto px-4">
+            <h3 class="text-3xl font-bold text-center mb-12">Наша подписка</h3>
+            <div class="max-w-2xl mx-auto bg-white text-[#1b2a49] p-8 rounded-lg shadow-lg text-center">
+                <h4 class="text-2xl font-bold mb-4">Стоимость обучения</h4>
+                <p class="text-lg mb-4">
+                    Один месяц обучения стоит <span class="font-bold">39 000 тенге</span>.
+                </p>
+                <p class="text-lg">
+                    Каждый обучающийся получает подарок в Robux эквивалентом <span class="font-bold">10 000 тенге</span>!
+                </p>
+                <a href="#form" class="roblox-btn inline-block mt-6 text-white font-bold py-3 px-6 rounded-lg text-lg">
+                    Записаться
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Секция с формой -->
+    <section id="form" class="py-16">
+        <div class="container mx-auto px-4">
+            <h3 class="text-3xl font-bold text-center mb-12">Оставить заявку</h3>
+            <form class="max-w-lg mx-auto bg-white p-8 rounded-lg shadow-lg text-[#1b2a49]" id="application-form">
+                <div class="mb-6">
+                    <label for="name" class="block text-lg font-bold mb-2">Имя</label>
+                    <input type="text" id="name" name="name" class="w-full p-3 border rounded-lg" required>
+                </div>
+                <div class="mb-6">
+                    <label for="phone" class="block text-lg font-bold mb-2">Телефон</label>
+                    <input type="tel" id="phone" name="phone" class="w-full p-3 border rounded-lg" required>
+                </div>
+                <button type="submit" class="roblox-btn w-full text-white font-bold py-3 rounded-lg">Отправить заявку</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Подвал -->
+    <footer class="bg-[#1b2a49] py-6">
+        <div class="container mx-auto px-4 text-center">
+            <p>© 2025 Английский в Roblox. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('application-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const chatId = '-4584976529'; // ID группы Platon & UniqbookBot ELC
+            const message = `Новая заявка:\nИмя: ${name}\nТелефон: ${phone}`;
+
+            try {
+                // Временный запрос через Telegram API (небезопасно для продакшена)
+                const response = await fetch('https://api.telegram.org/bot7660930209:AAHx2T9toG1LID97XAlB8Ha1FOgeVfa53lM/sendMessage', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        chat_id: chatId,
+                        text: message
+                    })
+                });
+
+                if (response.ok) {
+                    alert('Заявка успешно отправлена! Мы свяжемся с вами скоро.');
+                    this.reset();
+                } else {
+                    alert('Ошибка при отправке заявки. Попробуйте позже.');
+                }
+            } catch (error) {
+                console.error('Ошибка:', error);
+                alert('Ошибка при отправке заявки. Проверьте подключение к интернету.');
+            }
+        });
+    </script>
+</body>
+</html>
