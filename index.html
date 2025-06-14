@@ -1,48 +1,9 @@
-<script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
-
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-        </script><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Английский в Roblox</title>
+    <title>RobEng</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -68,7 +29,7 @@
     <!-- Шапка -->
     <header class="bg-[#1b2a49] py-4 shadow-lg">
         <div class="container mx-auto px-4 flex justify-between items-center">
-            <h1 class="text-3xl font-bold text-white">Английский в Roblox</h1>
+            <h1 class="text-3xl font-bold text-white">RobEng</h1>
             <nav>
                 <a href="#about" class="text-white mx-4 hover:text-[#00b7ff]">О нас</a>
                 <a href="#subscription" class="text-white mx-4 hover:text-[#00b7ff]">Подписка</a>
@@ -94,6 +55,11 @@
     <section id="about" class="py-16 section-bg">
         <div class="container mx-auto px-4">
             <h3 class="text-3xl font-bold text-center mb-12">Почему мы?</h3>
+            <div class="text-center mb-12">
+                <p class="text-xl max-w-3xl mx-auto">
+                    <span class="font-bold">RobEng</span> — это уникальная онлайн-школа, где дети учат английский язык, погружаясь в мир Roblox. Мы сочетаем игру и обучение, чтобы каждый урок был увлекательным приключением, а результаты заметны с первого занятия!
+                </p>
+            </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div class="bg-white text-[#1b2a49] p-6 rounded-lg shadow-lg">
                     <h4 class="text-2xl font-bold mb-4">Для родителей</h4>
@@ -120,9 +86,17 @@
                 <p class="text-lg mb-4">
                     Один месяц обучения стоит <span class="font-bold">39 000 тенге</span>.
                 </p>
-                <p class="text-lg">
+                <p class="text-lg mb-4">
                     Каждый обучающийся получает подарок в Robux эквивалентом <span class="font-bold">10 000 тенге</span>!
                 </p>
+                <h5 class="text-xl font-bold mb-4">Что входит в подписку?</h5>
+                <ul class="text-lg text-left mb-6 list-disc list-inside">
+                    <li>20 квестов в месяц</li>
+                    <li>200 новых слов</li>
+                    <li>Суммарно около 5 часов практических заданий</li>
+                    <li>Поддержка 24/7</li>
+                    <li>Ваш ребенок не просто играет — он обучается</li>
+                </ul>
                 <a href="#form" class="roblox-btn inline-block mt-6 text-white font-bold py-3 px-6 rounded-lg text-lg">
                     Записаться
                 </a>
@@ -151,7 +125,7 @@
     <!-- Подвал -->
     <footer class="bg-[#1b2a49] py-6">
         <div class="container mx-auto px-4 text-center">
-            <p>© 2025 Английский в Roblox. Все права защищены.</p>
+            <p>© 2025 RobEng. Все права защищены.</p>
         </div>
     </footer>
 
