@@ -23,6 +23,47 @@
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
         }
+        details summary {
+            cursor: pointer;
+            font-weight: bold;
+            padding: 1rem;
+            background: #ffffff;
+            color: #1b2a49;
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        details[open] summary {
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+        details div {
+            background: #ffffff;
+            color: #1b2a49;
+            padding: 1rem;
+            border-bottom-left-radius: 0.5rem;
+            border-bottom-right-radius: 0.5rem;
+        }
+        .hero-section {
+            position: relative;
+            background-image: url('https://via.placeholder.com/1920x1080?text=Roblox+Scenes');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* Затемнение для читаемости текста */
+            z-index: 1;
+        }
+        .hero-section > * {
+            position: relative;
+            z-index: 2;
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -33,13 +74,14 @@
             <nav>
                 <a href="#about" class="text-white mx-4 hover:text-[#00b7ff]">О нас</a>
                 <a href="#subscription" class="text-white mx-4 hover:text-[#00b7ff]">Подписка</a>
+                <a href="#faq" class="text-white mx-4 hover:text-[#00b7ff]">Вопросы и ответы</a>
                 <a href="#form" class="text-white mx-4 hover:text-[#00b7ff]">Заявка</a>
             </nav>
         </div>
     </header>
 
     <!-- Главная секция -->
-    <section class="flex-grow flex items-center justify-center py-12">
+    <section class="hero-section flex-grow flex items-center justify-center py-12">
         <div class="container mx-auto px-4 text-center">
             <h2 class="text-4xl md:text-5xl font-bold mb-6">Учи английский, играя в Roblox!</h2>
             <p class="text-xl mb-8 max-w-2xl mx-auto">
@@ -97,9 +139,38 @@
                     <li>Поддержка 24/7</li>
                     <li>Ваш ребенок не просто играет — он обучается</li>
                 </ul>
+                <h5 class="text-xl font-bold mb-4">Как оплатить?</h5>
+                <p class="text-lg text-left mb-6">
+                    Перейдите по ссылке на оплату через Kaspi: <a href="https://pay.kaspi.kz/pay/kqbc0je1" target="_blank" class="text-[#00b7ff] underline hover:text-[#0099cc]">Оплатить подписку</a>.<br>
+                    Укажите сумму <span class="font-bold">39 000 тенге</span>.<br>
+                    В комментарии к платежу напишите <span class="font-bold">логин Roblox</span> вашего ребенка.<br>
+                    После оплаты наш менеджер свяжется с вами для активации доступа.
+                </p>
                 <a href="#form" class="roblox-btn inline-block mt-6 text-white font-bold py-3 px-6 rounded-lg text-lg">
                     Записаться
                 </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Секция "Вопросы и ответы" -->
+    <section id="faq" class="py-16 section-bg">
+        <div class="container mx-auto px-4">
+            <h3 class="text-3xl font-bold text-center mb-12">Вопросы и ответы</h3>
+            <div class="max-w-3xl mx-auto">
+                <details>
+                    <summary class="text-lg">Что нужно для записи ребенка?</summary>
+                    <div class="text-lg">
+                        Оставьте вашу заявку, наш менеджер свяжется с вами, предложит удобный способ оплаты и запросит логин Roblox вашего ребенка. Далее мы активируем ему доступ, и он уже сможет приступать к первому уроку.
+                    </div>
+                </details>
+                <details>
+                    <summary class="text-lg">Истекла подписка, как восстановить?</summary>
+                    <div class="text-lg">
+                        Напишите вашему менеджеру, и он поможет с активацией.
+                    </div>
+                </details>
+                <!-- Добавляйте новые вопросы и ответы, копируя структуру <details> -->
             </div>
         </div>
     </section>
